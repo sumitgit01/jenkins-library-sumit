@@ -1,0 +1,15 @@
+def call() {
+    pipeline {
+        agent any
+        stages {
+            stage('Build_Provisioning'){
+                steps { 
+                    script {
+                        echo 'Building the Provisioning'
+                        sh 'echo "Building the Provisioning"'
+                }
+                    }
+            }
+        }
+    }
+}
