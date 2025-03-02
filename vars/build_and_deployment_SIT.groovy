@@ -28,7 +28,7 @@ def call() {
                 steps {
                     script {
                         dir('seh-students') {
-                            print env.NexusUrl
+                            /*print env.NexusUrl
                             pom = readMavenPom file: "pom.xml";
                             filesByGlob = findFiles(glob: "target/*.${pom.packaging}");
                             echo "${filesByGlob[0].name} ${filesByGlob[0].path} ${filesByGlob[0].directory} ${filesByGlob[0].length} ${filesByGlob[0].lastModified}"
@@ -57,7 +57,8 @@ def call() {
                                 );
                             } else {
                                 error "*** File: ${artifactPath}, could not be found"; 
-                            }
+                            }*/
+                            sh 'mvn deploy'
                         }
                     }
                 }
