@@ -7,6 +7,10 @@ def call() {
             //NEXUS_URL = env.NexusUrl
             NEXUS_REPOSITORY = "seh_students"
             NEXUS_CREDENTIAL_ID = "nexusCredential"
+            ARTIFACT_ID = 'seh-students'
+            VERSION = '0.0.1-SNAPSHOT'
+            GROUP_ID = 'com/seh'
+            FILE_NAME = 'seh-students-0.0.1-SNAPSHOT.jar'
         }
         stages {
             stage('Build_Provisioning'){
@@ -60,6 +64,27 @@ def call() {
                             }*/
                             sh 'mvn deploy'
                         }
+                    }
+                }
+            }
+            stage('Deploy to SIT') {
+                agent {
+                    label 'seh_01'
+                }
+                steps {
+                    script {
+                        echo 'Deploying to SIT'
+                        sh 'echo "Deploying to SIT"'
+                        withCredentials([usernamePassword(credentialsId: ${"NEXUS_CREDENTIAL_ID"}, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        // Run the curl command to download the artifact using the credentials
+                        sh """
+                            curl -u \$NEXUS_USERNAME:\$NEXUS_PASSWORD -O \$NEXUS_URL/\$GROUP_ID/\$ARTIFACT_ID/\$VERSION/\$FILE_NAME
+                        """
+                    }
+                        sh """
+                            curl -u admin:admin -O "http://192.168.18.11:8081/repository/maven-releases/com/seh/seh-students/0.0.1-SNAPSHOT/seh-students-0.0.1.jar"
+
+                        """
                     }
                 }
             }
