@@ -1,6 +1,8 @@
 def call() {
     pipeline {
-        agent any
+        agent {
+            label 'master'
+        }
         environment {
             NEXUS_VERSION = "nexus3"
             NEXUS_PROTOCOL = "http"
