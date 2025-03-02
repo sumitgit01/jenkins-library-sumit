@@ -5,6 +5,7 @@ def call() {
             stage('Build_Provisioning'){
                 steps { 
                     script {
+                        cleanWs()
                         echo 'Building the Provisioning'
                         sh 'echo "Building the Provisioning"'
                         sh """
