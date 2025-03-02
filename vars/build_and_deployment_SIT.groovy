@@ -6,7 +6,7 @@ def call() {
         environment {
             NEXUS_VERSION = "nexus3"
             NEXUS_PROTOCOL = "http"
-            //NEXUS_URL = env.NexusUrl
+            NEXUS_URL = env.NexusUrl
             NEXUS_REPOSITORY = "seh_students"
             NEXUS_CREDENTIAL_ID = "nexusCredential"
             ARTIFACT_ID = 'seh-students'
@@ -76,7 +76,7 @@ def call() {
                steps {
                 withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
                     script {
-                        def artifactUrl = "${NEXUS_URL}/${NEXUS_REPOSITORY}/${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}/${FILE_NAME}"
+                        def artifactUrl = "${NEXUS_PROTOCOL}://${NEXUS_URL}/${NEXUS_REPOSITORY}/${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}/${FILE_NAME}"
                         
                         sh """
                             echo "Downloading artifact from: ${artifactUrl}"
