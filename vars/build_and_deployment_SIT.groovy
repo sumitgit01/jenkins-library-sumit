@@ -73,22 +73,18 @@ def call() {
                 agent {
                     label 'seh_01'
                 }
-                steps {
+               steps {
+                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
                     script {
-                        echo 'Deploying to SIT'
-                        sh 'echo "Deploying to SIT"'
-                        withCredentials([usernamePassword(credentialsId: ${"NEXUS_CREDENTIAL_ID"}, usernameVariable: 'NEXUS_USERNAME', passwordVariable: 'NEXUS_PASSWORD')]) {
-                        // Run the curl command to download the artifact using the credentials
+                        def artifactUrl = "${NEXUS_URL}/${NEXUS_REPOSITORY}/${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}/${FILE_NAME}"
+                        
                         sh """
-                            curl -u \$NEXUS_USERNAME:\$NEXUS_PASSWORD -O \$NEXUS_URL/\$GROUP_ID/\$ARTIFACT_ID/\$VERSION/\$FILE_NAME
-                        """
-                    }
-                        sh """
-                            curl -u admin:admin -O "http://192.168.18.11:8081/repository/maven-releases/com/seh/seh-students/0.0.1-SNAPSHOT/seh-students-0.0.1.jar"
-
+                            echo "Downloading artifact from: ${artifactUrl}"
+                            curl -u \$NEXUS_USERNAME:\$NEXUS_PASSWORD -O ${artifactUrl}
                         """
                     }
                 }
+            }
             }
         }
     }
