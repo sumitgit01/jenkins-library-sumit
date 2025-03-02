@@ -3,7 +3,7 @@ def call() {
         agent any
         environment {
             NEXUS_VERSION = "nexus3"
-            //NEXUS_PROTOCOL = "http"
+            NEXUS_PROTOCOL = "http"
             //NEXUS_URL = env.NexusUrl
             NEXUS_REPOSITORY = "seh_students"
             NEXUS_CREDENTIAL_ID = "nexusCredential"
@@ -38,6 +38,7 @@ def call() {
                                 echo "*** File: ${artifactPath}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                                 nexusArtifactUploader(
                                     nexusVersion: NEXUS_VERSION,
+                                    protocol: NEXUS_PROTOCOL,
                                     nexusUrl: env.NexusUrl,
                                     groupId: pom.groupId,
                                     version: pom.version,
