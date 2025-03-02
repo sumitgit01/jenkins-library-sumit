@@ -4,7 +4,7 @@ def call() {
         environment {
             NEXUS_VERSION = "nexus3"
             NEXUS_PROTOCOL = "http"
-            NEXUS_URL = "http://192.168.18.11:8081"
+            NEXUS_URL = "192.168.18.11:8081"
             NEXUS_REPOSITORY = "seh_students"
             NEXUS_CREDENTIAL_ID = "nexusCredential"
         }
