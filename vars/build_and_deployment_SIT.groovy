@@ -7,8 +7,8 @@ def call() {
                     script {
                         echo 'Building the Provisioning'
                         sh 'echo "Building the Provisioning"'
+                   }
                 }
-                    }
             }
         }
     }
