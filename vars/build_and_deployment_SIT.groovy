@@ -77,8 +77,8 @@ def call() {
                     script {
                         def NEXUS_URL = env.NexusUrl ?: "http://192.168.18.11:8081/repository"
                         def artifactUrl = "${NEXUS_PROTOCOL}://${NEXUS_URL}/${NEXUS_REPOSITORY}/${GROUP_ID.replace('.', '/')}/${ARTIFACT_ID}/${VERSION}/${FILE_NAME}"
-                        
                         sh """
+                            pwd
                             echo "Downloading artifact from: ${artifactUrl}"
                             curl -u \$NEXUS_USERNAME:\$NEXUS_PASSWORD -O ${artifactUrl}
                         """
